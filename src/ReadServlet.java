@@ -15,19 +15,24 @@ public class ReadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = req.getParameter("id");
 		String content = "";
-		File file = new File("data/"+id);
-        FileReader filereader = new FileReader(file);
-        int singleCh = 0;
-        while((singleCh = filereader.read()) != -1){
-        	content += (char)singleCh;
-        }
-        filereader.close();
-		
+		if(id == null) {
+			id = "WEB";
+			content = "Welcome";
+		} else {
+			File file = new File("data/"+id);
+	        FileReader filereader = new FileReader(file);
+	        int singleCh = 0;
+	        while((singleCh = filereader.read()) != -1){
+	        	content += (char)singleCh;
+	        }
+	        filereader.close();
+		}
+
 		PrintWriter pw = resp.getWriter();
 		pw.write(""
 				+ "<html>"
 				+ "	<body>"
-				+ "		<h1>WEB</h1>"
+				+ "		<h1><a href=\"read\">WEB</a></h1>"
 				+ "		<ol>"
 				+ "			<li><a href=\"read?id=HTML\">HTML</a></li>"
 				+ "			<li><a href=\"read?id=CSS\">CSS</a></li>"
