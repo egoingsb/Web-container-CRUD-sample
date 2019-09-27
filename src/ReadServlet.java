@@ -27,6 +27,16 @@ public class ReadServlet extends HttpServlet {
 	        }
 	        filereader.close();
 		}
+		
+		String list = "";
+		File dir = new File("data");
+		File[] fileList = dir.listFiles();
+		for (int i = 0; i < fileList.length; i++) {
+			File file = fileList[i];
+			if (file.isFile()) {
+				list += "<li><a href=\"read?id="+file.getName()+"\">"+file.getName()+"</a></li>";
+			}
+		}		
 
 		PrintWriter pw = resp.getWriter();
 		pw.write(""
@@ -34,9 +44,7 @@ public class ReadServlet extends HttpServlet {
 				+ "	<body>"
 				+ "		<h1><a href=\"read\">WEB</a></h1>"
 				+ "		<ol>"
-				+ "			<li><a href=\"read?id=HTML\">HTML</a></li>"
-				+ "			<li><a href=\"read?id=CSS\">CSS</a></li>"
-				+ "			<li><a href=\"read?id=JavaScript\">JavaScript</a></li>"
+				+ 			list
 				+ "		</ol>"
 				+ "		<h2>"+id+"</h2>"
 				+ "		"+content
