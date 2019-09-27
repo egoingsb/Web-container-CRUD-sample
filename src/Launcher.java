@@ -11,6 +11,8 @@ public class Launcher {
 		Tomcat server = new Tomcat();
 		
 		Context app = server.addWebapp("/app", new File("WebContent").getAbsolutePath());
+		Tomcat.addServlet(app, "read-servlet", new ReadServlet());
+		app.addServletMappingDecoded("/read", "read-servlet");
 		
 		server.setPort(9999);
 		server.start();
